@@ -1,0 +1,7 @@
+---
+- hosts: dataiku
+  roles:
+   - install_java
+   - install_python
+   - install_ngnix
+   - install_dataiku

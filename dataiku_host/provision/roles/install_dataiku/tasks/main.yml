@@ -1,0 +1,24 @@
+- name: make required folders
+  file: path={{item}} state=directory mode=0755 owner=vagrant group=vagrant
+  with_items:
+    - /home/vagrant/download
+    - /opt/dataiku_data
+
+- name: download dataiku
+  get_url: url=http://downloads.dataiku.com/public/studio/3.0.1/dataiku-dss-3.0.1.tar.gz dest=/home/vagrant/download/dataiku-dss-3.0.1.tar.gz
+
+- name: extract dataiku archive file
+  unarchive: src=/home/vagrant/download/dataiku-dss-3.0.1.tar.gz dest=/home/vagrant/download/ copy=no owner=vagrant group=vagrant mode=0755 creates=/home/vagrant/download/dataiku-dss-3.0.1/dss-version.json
+
+- name: install dataiku
+  command: ./installer.sh -d /opt/dataiku_data -p 11000
+  sudo: no
+  args:
+    chdir: /home/vagrant/download/dataiku-dss-3.0.1
+    creates: /opt/dataiku_data/bin/
+
+#TODO - we need to set the permissions after this install is successful
+
+- name: start dataiku
+  command: /opt/dataiku_data/bin/dss start
+  sudo: no

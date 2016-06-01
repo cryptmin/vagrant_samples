@@ -1,0 +1,17 @@
+---
+- pam_limits: domain=vagrant limit_type=soft limit_item=nofile value=64000
+
+- name: install python - pre requisites
+  apt: name={{ item }} state=present
+  with_items:
+    - build-essential
+    - libbz2-dev
+    - libncurses5-dev
+    - libreadline6-dev
+    - libsqlite3-dev
+    - liblzma-dev
+    - libssl-dev
+    - python3-setuptools
+    - curl
+    - libpython2.7
+    - libgfortran3

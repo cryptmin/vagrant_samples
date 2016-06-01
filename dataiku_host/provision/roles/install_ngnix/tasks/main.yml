@@ -1,0 +1,8 @@
+---
+- name: add ngnix repository
+  apt_repository: repo='ppa:nginx/stable'
+
+- name: install ngnix
+  apt: name={{ item }} state=latest
+  with_items:
+    - nginx-full
